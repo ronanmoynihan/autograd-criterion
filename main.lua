@@ -4,6 +4,7 @@ require 'math'
 require 'nn'
 autograd = require 'autograd'
 local train = require 'train'
+local gradcheck = require 'autograd.gradcheck' {randomizeInput = true}
 
 --[[command line arguments]]--
 cmd = torch.CmdLine()
@@ -121,7 +122,29 @@ end
 -- TODO: CheckGrad
 ------------------------------------------------------------------------------
 
+  local f,params = autograd.model.NeuralNetwork({
+         inputFeatures = 100,
+         hiddenFeatures = {50,2},
+         classifier = true,
+      })
 
+      -- Loss:
+      local loss = function(params, input, target)
+         local pred = f(params, input)
+         local loss = autograd.loss.crossEntropy(pred,target)
+         return loss,pred
+      end
 
+      local i = torch.randn(100)
+      local t = torch.Tensor({1,0})
+
+      local l,pred = loss(params, i, t)
+      local grads = autograd(loss)(params, i, t)
+
+      print(l)
+      print(type(l))
+      print(gradcheck(loss, params, i, t))
+
+gradcheck(autoBiasedMSECriterion, data.train_data,data.train_targets)
 
 
