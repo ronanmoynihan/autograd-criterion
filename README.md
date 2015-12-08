@@ -2,7 +2,8 @@
 
 A custom Torch criterion based on the [MSECriterion](https://github.com/torch/nn/blob/master/doc/criterion.md#nn.MSECriterion) to train a nueral network that will learn to either over or under predict. This may be useful in certain situations i.e when over predicting is financially more expensive than under predicting.  
 
-The model uses twitter's [autograd](https://github.com/twitter/torch-autograd) to automatically differentiate the criterion.
+The model uses twitter's [autograd](https://github.com/twitter/torch-autograd) to automatically differentiate the criterion.  
+The original version which computes the gradient manually can be found [here](https://github.com/ronanmoynihan/biased-regression)
 
 The example trains a model using the [Boston Housing Data](http://lib.stat.cmu.edu/datasets/boston).
 
